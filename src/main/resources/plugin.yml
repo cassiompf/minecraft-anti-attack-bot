@@ -1,0 +1,4 @@
+name: cmAntiBot
+version: ${project.version}
+main: gmail.fopypvp174.cmantibot.CmAntiBot
+description: Plugin para evitar ataques bot's

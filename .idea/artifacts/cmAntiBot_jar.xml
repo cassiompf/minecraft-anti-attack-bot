@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="cmAntiBot:jar">
+    <output-path>$PROJECT_DIR$/../../Servidores/Minez-V2/plugins</output-path>
+    <root id="archive" name="cmAntiBot.jar">
+      <element id="module-output" name="cmAntiBot" />
+    </root>
+  </artifact>
+</component>
