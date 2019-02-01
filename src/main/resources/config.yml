@@ -1,0 +1,65 @@
+messages:
+  # mensagens que irá aparecer quando o settings.limit_ip for maior que 0
+  limit_ip:
+    - " "
+    - "&cVocê só pode entrar com 2 contas por IP."
+    - " "
+
+  # mensagem que irá aparecer caso o jogador estiver usando proxy e o proxy_verify estiver ativado 'true'.
+  proxy_detected:
+    - " "
+    - "&cVocê não pode usar proxy no servidor."
+    - " "
+
+  # mensagem que irá aparecer caso a diferença do tempo entre o último jogador
+  # e o jogador que acabou de entrar for menor que o settings.time_check
+  time_check:
+    - " "
+    - "&cO servidor está passando por dificuldades no momento!"
+    - "&cTente entrar novamente mais tarde!"
+    - " "
+
+  # mensagem que irá aparecer caso o verify_nick estiver ativado
+  verify_nick:
+    - " "
+    - "&cO seu nick foi verificado!"
+    - "&cReentre no servidor para poder jogar!"
+    - " "
+
+settings:
+  # Se isso estiver definido como 'true' o sistema de anti-bot irá
+  # forçar a verificação do jogador, isto é, irá verificar se ele está
+  # usando proxy por todas as outras verificações.
+  # É recomendado deixar como false
+  # Necessita do plugin AuthMe (https://www.spigotmc.org/resources/authmereloaded.6269/)
+  # para deixar esta opção como 'false'.
+  # É recomendado usar o AuthMe e definir isso como 'false'
+  verify_player_registed: false
+
+  # limit_ip serve para limitar a quantidade de jogadores com o mesmo IP
+  # 0 fará com que os jogadores entrem com várias contas utilizando o mesmo IP
+  # É recomendado deixar 2
+  limit_ip: 2
+
+  # proxy_verify verifica se o jogador está utilizando proxy
+  # é recomendado deixar ativado.
+  proxy_verify: true
+
+  # console_filter serve para filtar todas as mensagens do console
+  # quando estiver acontecendo um ataque bot.
+  # é recomendado deixar ativado.
+  console_filter: true
+
+  # time_check serve para verificar a diferença do tempo (em milisegundos)
+  # do último jogador que entrou com o jogador que acabou de entrar.
+  # Se o tempo estiver definido como 250 milisegundos o jogador que entrou
+  # irá conseguir entrar apenas se essa diferença for maior que 250.
+  # É recomendado deixar '250'
+  time_check: 250
+
+  # verify_nick serve para verificar o ip do jogador que acabou de entrar.
+  # Isso serve para kikar o jogador na primeira vez que ele entrar no servidor
+  # Será expulso do servidor caso o jogador entre com um ip pela primeira vez
+  # e depois entre com um ip diferente.
+  # É recomendado deixar ativado.
+  verify_nick: true

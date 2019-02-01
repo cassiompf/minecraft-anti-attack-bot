@@ -1,4 +1,5 @@
 name: cmAntiBot
 version: 1.0-SNAPSHOT
 main: gmail.fopypvp174.cmantibot.CmAntiBot
-description: Plugin para evitar ataques bot
+description: Plugin para evitar ataques bot's
+softdepend: [AuthMe]

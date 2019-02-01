@@ -1,9 +1,13 @@
 package gmail.fopypvp174.cmantibot;
 
 import com.ip2proxy.IP2Proxy;
+import fr.xephi.authme.api.v3.AuthMeApi;
+import gmail.fopypvp174.cmantibot.configuration.PluginConfig;
 import gmail.fopypvp174.cmantibot.logger.LoggerApi;
 import gmail.fopypvp174.cmantibot.entidades.BotEntity;
 import gmail.fopypvp174.cmantibot.eventos.EventoJoinEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -13,26 +17,36 @@ import java.util.ArrayList;
 public final class CmAntiBot extends JavaPlugin {
 
     private final IP2Proxy Proxy = new IP2Proxy();
-    private final EventoJoinEvent eventoJoinEvent = new EventoJoinEvent(this);;
+    private final EventoJoinEvent eventoJoinEvent = new EventoJoinEvent(this);
     private final LoggerApi loggerApi = new LoggerApi();
+    private final PluginConfig pluginConfig = new PluginConfig(this, "config.yml", "config.yml");
 
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(eventoJoinEvent, this);
-        this.saveResource("IP2PROXY-LITE-PX1.BIN", false);
-        loggerApi.registerFilter();
 
-        try {
-            if (Proxy.Open("IP2PROXY-LITE-PX1.BIN", IP2Proxy.IOModes.IP2PROXY_MEMORY_MAPPED) == 0) {
-                System.out.println("[cmAntiBot] Proxys carregadas com sucesso.");
-            } else {
-                System.out.println("[cmAntiBot] Error reading BIN file.");
+        if (pluginConfig.getBoolean("settings.console_filter") == true) {
+            loggerApi.registerFilter();
+        }
+
+        if (pluginConfig.getBoolean("settings.proxy_verify") == true) {
+            this.saveResource("IP2PROXY-LITE-PX1.BIN", false);
+            try {
+                if (Proxy.Open("IP2PROXY-LITE-PX1.BIN", IP2Proxy.IOModes.IP2PROXY_MEMORY_MAPPED) == 0) {
+                    System.out.println("[cmAntiBot] Proxys carregadas com sucesso.");
+                } else {
+                    System.out.println("[cmAntiBot] Erro na hora de ler BIN file.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         setupTimer();
+    }
+
+    public PluginConfig getPluginConfig() {
+        return pluginConfig;
     }
 
     public final Integer checkIpv4(String ipv4) {

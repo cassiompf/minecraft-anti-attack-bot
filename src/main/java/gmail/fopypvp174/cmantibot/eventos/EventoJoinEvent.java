@@ -1,8 +1,8 @@
 package gmail.fopypvp174.cmantibot.eventos;
 
+import fr.xephi.authme.api.v3.AuthMeApi;
 import gmail.fopypvp174.cmantibot.CmAntiBot;
 import gmail.fopypvp174.cmantibot.entidades.BotEntity;
-import gmail.fopypvp174.cmlogincaptcha.api.LoginApi;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -30,46 +30,77 @@ public final class EventoJoinEvent implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public final void asyncPlayerLoginEvent(AsyncPlayerPreLoginEvent e) {
 
-        if (LoginApi.hasRegistred(e.getName())) {
+        if (timeAnterior == null) {
+            timeAnterior = System.currentTimeMillis();
             return;
         }
 
+        if (cmAntiBot.getPluginConfig().getBoolean("settings.verify_player_registed") == false) {
+            if (cmAntiBot.getServer().getPluginManager().isPluginEnabled("AuthMe")) {
+                if (AuthMeApi.getInstance().isRegistered(e.getName())) {
+                    return;
+                }
+            } else {
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[cmAntiBot] É preciso estar utilizando o AuthMe-Reloaded");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[cmAntiBot] para a opção settings.verify_player_registed");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[cmAntiBot] estar definida como 'false'");
+            }
+        }
+        StringBuilder mensagem = new StringBuilder();
+
         BotEntity botEntrou = new BotEntity(System.currentTimeMillis());
-        timeAnterior = System.currentTimeMillis();
         Long timer = botEntrou.getTime() - timeAnterior;
-        if (timer < 250) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatColor.RED + "O servidor está passando por dificuldades no momento! \nEspere um pouco e tente entrar novamente!");
+        timeAnterior = System.currentTimeMillis();
+        if (timer < cmAntiBot.getPluginConfig().getInt("settings.time_check")) {
+            cmAntiBot.getPluginConfig().getStringList("messages.time_check").forEach(msg ->
+                    mensagem.append(msg));
+            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, mensagem.toString());
             return;
         }
 
         String ipv4 = e.getAddress().getHostName().replace("\\", "");
-        byte contador = 0;
-        for (Player target : Bukkit.getOnlinePlayers()) {
-            if (ipv4.equals(target.getAddress().getHostName().replace("\\", ""))) {
-                contador++;
+        if (cmAntiBot.getPluginConfig().getInt("settings.limit_ip") != 0) {
+            byte contador = 0;
+            for (Player target : Bukkit.getOnlinePlayers()) {
+                if (ipv4.equals(target.getAddress().getHostName().replace("\\", ""))) {
+                    contador++;
+                }
+                if (contador > cmAntiBot.getPluginConfig().getInt("settings.limit_ip")) {
+
+                    cmAntiBot.getPluginConfig().getStringList("messages.limit_ip").forEach(msg ->
+                            mensagem.append(msg));
+
+                    e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, mensagem.toString());
+                    return;
+                }
             }
-            if (contador > 2) {
-                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Só pode ter 2 contas logadas por IP!");
+        }
+
+        if (cmAntiBot.getPluginConfig().getBoolean("settings.proxy_verify") == true) {
+            if (cmAntiBot.checkIpv4(ipv4) != 0) {
+                cmAntiBot.getPluginConfig().getStringList("messages.proxy_detected").forEach(msg ->
+                        mensagem.append(msg));
+                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, mensagem.toString());
                 return;
             }
         }
-
-        if (cmAntiBot.checkIpv4(ipv4) != 0) {
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatColor.RED + "Não entre com proxy no servidor!");
-            return;
-        }
-
         botEntrou.setIpv4(ipv4);
-        if (!ipsAllowJoin.containsKey(e.getName())) {
-            ipsAllowJoin.put(e.getName(), botEntrou);
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatColor.RED + "O seu nick foi verificado! \nEntre novamente para jogar!");
-            return;
-        }
 
-        if (!ipsAllowJoin.get(e.getName()).getIpv4().equals(ipv4)) {
-            ipsAllowJoin.replace(e.getName(), botEntrou);
-            e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, ChatColor.RED + "O seu nick foi verificado! \nEntre novamente para jogar!");
-            return;
+        if (cmAntiBot.getPluginConfig().getBoolean("settings.verify_nick") == true) {
+            cmAntiBot.getPluginConfig().getStringList("messages.verify_nick").forEach(msg ->
+                    mensagem.append(msg));
+
+            if (!ipsAllowJoin.containsKey(e.getName())) {
+                ipsAllowJoin.put(e.getName(), botEntrou);
+                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, mensagem.toString());
+                return;
+            }
+
+            if (!ipsAllowJoin.get(e.getName()).getIpv4().equals(ipv4)) {
+                ipsAllowJoin.replace(e.getName(), botEntrou);
+                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, mensagem.toString());
+                return;
+            }
         }
 
         ipsAllowJoin.remove(e.getName());
