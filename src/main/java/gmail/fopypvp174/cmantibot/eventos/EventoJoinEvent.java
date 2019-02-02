@@ -1,6 +1,5 @@
 package gmail.fopypvp174.cmantibot.eventos;
 
-import fr.xephi.authme.api.v3.AuthMeApi;
 import gmail.fopypvp174.cmantibot.CmAntiBot;
 import gmail.fopypvp174.cmantibot.entidades.BotEntity;
 import org.bukkit.Bukkit;
@@ -37,10 +36,13 @@ public final class EventoJoinEvent implements Listener {
 
         if (cmAntiBot.getPluginConfig().getBoolean("settings.verify_player_registed") == false) {
             if (cmAntiBot.getServer().getPluginManager().isPluginEnabled("AuthMe")) {
-                if (AuthMeApi.getInstance().isRegistered(e.getName())) {
+                if (fr.xephi.authme.api.v3.AuthMeApi.getInstance().isRegistered(e.getName())) {
                     return;
                 }
             } else {
+                if(cmAntiBot.getServer().getPluginManager().isPluginEnabled("nLogin") && (nickultracraft.login.api.nLoginAPI.getInstance().estaRegistrado(e.getName()))) {
+            		return;
+            	}
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[cmAntiBot] É preciso estar utilizando o AuthMe-Reloaded");
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[cmAntiBot] para a opção settings.verify_player_registed");
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[cmAntiBot] estar definida como 'false'");
