@@ -43,7 +43,7 @@ public final class EventoJoinEvent implements Listener {
                 if(cmAntiBot.getServer().getPluginManager().isPluginEnabled("nLogin") && (nickultracraft.login.api.nLoginAPI.getInstance().estaRegistrado(e.getName()))) {
             		return;
             	}
-                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[cmAntiBot] É preciso estar utilizando o AuthMe-Reloaded");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[cmAntiBot] É preciso estar utilizando o AuthMe-Reloaded ou nLogin");
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[cmAntiBot] para a opção settings.verify_player_registed");
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[cmAntiBot] estar definida como 'false'");
             }
