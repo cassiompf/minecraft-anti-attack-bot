@@ -2,5 +2,5 @@ name: cmAntiBot
 version: ${project.version}
 main: gmail.fopypvp174.cmantibot.CmAntiBot
 description: Plugin para evitar ataques bot's
-softdepend: [AuthMe]
+softdepend: [AuthMe,nLogin]
 author: [C4ssi0]
