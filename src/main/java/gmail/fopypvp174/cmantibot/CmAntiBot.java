@@ -1,7 +1,6 @@
 package gmail.fopypvp174.cmantibot;
 
 import com.ip2proxy.IP2Proxy;
-import fr.xephi.authme.api.v3.AuthMeApi;
 import gmail.fopypvp174.cmantibot.configuration.PluginConfig;
 import gmail.fopypvp174.cmantibot.logger.LoggerApi;
 import gmail.fopypvp174.cmantibot.entidades.BotEntity;
