@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="cmLoginCaptcha">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../Servidores/Minez-V2/plugins/cmLoginCaptcha.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
