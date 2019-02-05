@@ -11,6 +11,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import rush.login.entidades.LPlayer;
+
 import java.util.LinkedHashMap;
 
 public final class EventoJoinEvent implements Listener {
@@ -44,6 +46,11 @@ public final class EventoJoinEvent implements Listener {
                 if(nLoginAPI.getInstance().estaRegistrado(e.getName())) {
             		return;
             	}
+            } else if (cmAntiBot.getServer().getPluginManager().isPluginEnabled("Login")) {
+                LPlayer lp = LPlayer.get(e.getName());
+                if(lp.isRegistered()) {
+                    return;
+                }
             } else {
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[cmAntiBot] É preciso estar utilizando o AuthMe-Reloaded ou nLogin");
                 Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[cmAntiBot] para a opção settings.verify_player_registed");

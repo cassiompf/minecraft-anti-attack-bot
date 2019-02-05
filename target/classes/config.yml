@@ -29,9 +29,10 @@ messages:
 settings:
   # Se isso estiver definido como 'true' o sistema de anti-bot irá
   # forçar a verificação do jogador, isto é, irá verificar se ele está
-  # usando proxy por todas as outras verificações.
+  # usando proxy e irá fazer todas as outras verificações.
   # É recomendado deixar como false
   # Necessita do plugin AuthMe (https://www.spigotmc.org/resources/authmereloaded.6269/)
+  # ou do plugin nLogin (https://www.spigotmc.org/resources/pt-br-nlogin.57272/)
   # para deixar esta opção como 'false'.
   # É recomendado usar o AuthMe e definir isso como 'false'
   verify_player_registed: false
