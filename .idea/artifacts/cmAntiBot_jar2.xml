@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="cmAntiBot:jar2">
-    <output-path>$PROJECT_DIR$/../../Servidores/Spigot1.8.8/plugins</output-path>
-    <root id="archive" name="cmAntiBot.jar">
-      <element id="module-output" name="cmAntiBot" />
-    </root>
-  </artifact>
-</component>

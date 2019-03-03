@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="AuthMe-5.4.0">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../Plugins Minecraft/AuthMe-5.4.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../../Plugins Minecraft/nLogin.jar!/" />
-      <root url="jar://$PROJECT_DIR$/../../Plugins Minecraft/MambaLogin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../Servidores Minecraft/Plugins/AuthMe-5.4.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../Servidores Minecraft/Plugins/MambaLogin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../Servidores Minecraft/Plugins/nLogin (1).jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../../Plugins Minecraft/AuthMe-5.4.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../Servidores Minecraft/Plugins/AuthMe-5.4.0.jar!/" />
     </SOURCES>
   </library>
 </component>
